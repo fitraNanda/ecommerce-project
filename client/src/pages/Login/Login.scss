@@ -1,3 +1,5 @@
+@import "../../style.scss";
+
 .login-container {
   width: 100vw;
   height: 100vh;
@@ -19,6 +21,10 @@
     padding: 20px;
     width: 25%;
     background-color: white;
+
+    @include mobile {
+      width: 75%;
+    }
 
     .title {
       font-size: 24px;

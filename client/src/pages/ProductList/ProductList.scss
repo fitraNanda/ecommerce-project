@@ -1,3 +1,5 @@
+@import "../../style.scss";
+
 .ProductList-container {
   .title {
     margin: 20px;
@@ -11,15 +13,29 @@
   .filter {
     margin: 20px;
 
+    @include mobile {
+      width: 0px 20px;
+      display: flex;
+      flex-direction: column;
+    }
+
     .filter-text {
       font-size: 20px;
       font-weight: 600;
       margin-right: 20px;
+
+      @include mobile {
+        margin-right: 0px;
+      }
     }
 
     .select {
       padding: 10px;
       margin-right: 20px;
+
+      @include mobile {
+        margin: 10px 0px;
+      }
     }
   }
 }

@@ -1,5 +1,11 @@
+@import "../../style.scss";
+
 .footer-container {
   display: flex;
+
+  @include mobile {
+    flex-direction: column;
+  }
   .left {
     flex: 1;
     display: flex;
@@ -32,6 +38,10 @@
     flex: 1;
     padding: 20px;
 
+    @include mobile {
+      display: none;
+    }
+
     .title {
       margin-bottom: 30px;
     }
@@ -52,6 +62,10 @@
   .right {
     flex: 1;
     padding: 20px;
+
+    @include mobile {
+      background-color: #fff8f8;
+    }
 
     .title {
       margin-bottom: 30px;
