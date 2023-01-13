@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import ArrowLeftOutlinedIcon from "@mui/icons-material/ArrowLeftOutlined";
 import ArrowRightOutlinedIcon from "@mui/icons-material/ArrowRightOutlined";
 import "./Slider.scss";
@@ -15,6 +15,31 @@ const Slider = () => {
     }
   };
 
+  const delay = 5000;
+
+  const timeoutRef = useRef(null);
+
+  function resetTimeout() {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+  }
+
+  useEffect(() => {
+    resetTimeout();
+    timeoutRef.current = setTimeout(
+      () =>
+        setSlideIndex((prevIndex) =>
+          prevIndex === sliderItems.length - 1 ? 0 : prevIndex + 1
+        ),
+      delay
+    );
+
+    return () => {
+      resetTimeout();
+    };
+  }, [slideIndex]);
+
   return (
     <div className="slider-container">
       <div
@@ -29,6 +54,7 @@ const Slider = () => {
         className="wrapper"
         style={{
           transform: `translateX(${slideIndex * -100}vw)`,
+          transform: `translate3d(${-slideIndex * 100}vw, 0, 0)`,
         }}
       >
         {sliderItems.map((val) => (
