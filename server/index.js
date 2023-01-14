@@ -6,9 +6,8 @@ const port = process.env.PORT || 3300;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/", (req, res) => {
-  res.status(200).send("hidup");
-});
+const route = require("./routes");
+app.use(route);
 
 app.listen(port, () => {
   console.log("server berjalan pada port " + port);
