@@ -37,3 +37,5 @@ module.exports = {
     await queryInterface.bulkDelete("Users", null, {});
   },
 };
+
+// membuat seeder di seed:generate dulu, lalu db:seed
