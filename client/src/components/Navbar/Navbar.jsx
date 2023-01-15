@@ -3,6 +3,7 @@ import "./Navbar.scss";
 import SearchIcon from "@mui/icons-material/Search";
 import Badge from "@mui/material/Badge";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
@@ -21,7 +22,15 @@ const Navbar = () => {
           <h1 className="logo">LAPAU BARU</h1>
         </div>
         <div className="right">
-          <div className="menuItem">REGISTER</div>
+          <div>
+            <Link
+              className="menuItem"
+              to="/register"
+              style={{ textDecoration: "none" }}
+            >
+              REGISTER
+            </Link>
+          </div>
           <div className="menuItem">SIGN IN</div>
           <div className="menuItem">
             <Badge badgeContent={4} color="primary">
