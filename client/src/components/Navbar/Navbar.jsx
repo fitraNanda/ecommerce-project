@@ -3,9 +3,11 @@ import "./Navbar.scss";
 import SearchIcon from "@mui/icons-material/Search";
 import Badge from "@mui/material/Badge";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="navbar-container">
       <div className="wrapper">
@@ -19,17 +21,13 @@ const Navbar = () => {
           </div>
         </div>
         <div className="center">
-          <h1 className="logo">LAPAU BARU</h1>
+          <h1 className="logo" onClick={() => navigate("/")}>
+            LAPAU BARU
+          </h1>
         </div>
         <div className="right">
-          <div>
-            <Link
-              className="menuItem"
-              to="/register"
-              style={{ textDecoration: "none" }}
-            >
-              REGISTER
-            </Link>
+          <div className="menuItem" onClick={() => navigate("/register")}>
+            REGISTER
           </div>
           <div className="menuItem">SIGN IN</div>
           <div className="menuItem">

@@ -53,6 +53,7 @@
     text-align: center;
 
     .logo {
+      cursor: pointer;
       font-weight: bold;
       @include mobile {
         font-size: 15px;

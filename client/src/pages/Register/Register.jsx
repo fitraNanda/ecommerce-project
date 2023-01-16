@@ -4,8 +4,11 @@ import Axios from "axios";
 import { API_URL } from "../../constant/API_URL";
 import { useState } from "react";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+import Annoucement from "../../components/Annoucements/Annoucements";
 
 const Register = () => {
+  const navigate = useNavigate();
   const [input, setInput] = useState({
     username: "",
     email: "",
@@ -72,53 +75,73 @@ const Register = () => {
   };
 
   return (
-    <div className="register-container">
-      <div className="register-wrapper">
-        <h1 className="title">CREATE AN ACCOUNT</h1>
-        <form className="form">
-          <input
-            onChange={handleInput}
-            type="text"
-            className="input"
-            placeholder="username"
-            name="username"
-            value={input.username}
-          />
-          <input
-            onChange={handleInput}
-            type="email"
-            className="input"
-            placeholder="email"
-            name="email"
-            value={input.email}
-          />
-          <input
-            onChange={handleInput}
-            type="password"
-            className="input"
-            placeholder="password"
-            name="password"
-            value={input.password}
-          />
-          <input
-            onChange={handleInput}
-            type="password"
-            className="input"
-            placeholder="confrim password"
-            name="confirmPassword"
-            value={confirmPassword}
-          />
-          <span className="agreement">
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Cupiditate alias porro voluptatum
-            </p>
-            <b>PRIVACY POLICY</b>
-          </span>
-          <button onClick={submit} className="button">
-            CREATE
-          </button>
-        </form>
+    <div className="register">
+      <Annoucement />
+      <div className="navbar-container">
+        <div className="wrapper">
+          <div className="left">
+            <span style={{ cursor: "pointer" }} onClick={() => navigate("/")}>
+              HOMEPAGE
+            </span>
+          </div>
+          <div className="center">
+            <h1 className="logo" onClick={() => navigate("/")}>
+              LAPAU BARU
+            </h1>
+          </div>
+          <div className="right">
+            <div className="menuItem">SIGN IN</div>
+          </div>
+        </div>
+      </div>
+      <div className="register-container">
+        <div className="register-wrapper">
+          <h1 className="title">CREATE AN ACCOUNT</h1>
+          <form className="form">
+            <input
+              onChange={handleInput}
+              type="text"
+              className="input"
+              placeholder="username"
+              name="username"
+              value={input.username}
+            />
+            <input
+              onChange={handleInput}
+              type="email"
+              className="input"
+              placeholder="email"
+              name="email"
+              value={input.email}
+            />
+            <input
+              onChange={handleInput}
+              type="password"
+              className="input"
+              placeholder="password"
+              name="password"
+              value={input.password}
+            />
+            <input
+              onChange={handleInput}
+              type="password"
+              className="input"
+              placeholder="confrim password"
+              name="confirmPassword"
+              value={confirmPassword}
+            />
+            <span className="agreement">
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Cupiditate alias porro voluptatum
+              </p>
+              <b>PRIVACY POLICY</b>
+            </span>
+            <button onClick={submit} className="button">
+              CREATE
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );
