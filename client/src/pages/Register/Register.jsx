@@ -13,6 +13,7 @@ const Register = () => {
     image:
       "https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o=",
     role: "user",
+    status: "unverified",
   });
 
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -32,10 +33,18 @@ const Register = () => {
   const submit = async (e) => {
     e.preventDefault();
 
-    if (input.password == confirmPassword) {
+    if (confirmPassword && input.password == confirmPassword) {
       try {
         let result = await Axios.post(`${API_URL}/users/register`, input);
-        console.log(result);
+
+        if (result.data == "exist") {
+          return Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!",
+            footer: "<h4>Username sudah ada</h4>",
+          });
+        }
 
         Swal.fire("Berhasil Register!", "Silahkan cek Email anda!", "success");
 
@@ -43,6 +52,10 @@ const Register = () => {
           username: "",
           email: "",
           password: "",
+          image:
+            "https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o=",
+          role: "user",
+          status: "unverified",
         });
         setConfirmPassword("");
       } catch (error) {

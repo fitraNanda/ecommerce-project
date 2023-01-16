@@ -5,7 +5,8 @@
     "email": "fitrananda05@gmail.com",
     "password": "password",
     "image": "https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o=",
-    "role": "admin"
+    "role": "admin",
+    "status": "verified"
   },
   {
     "id": 2,
@@ -13,6 +14,7 @@
     "email": "john@gmail.com",
     "password": "password",
     "image": "https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o=",
-    "role": "user"
+    "role": "user",
+    "status": "verified"
   }
 ]

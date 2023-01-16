@@ -16,8 +16,8 @@ class UsersController {
   }
 
   static async register(req, res) {
-    const { username, email, password, image, role } = req.body;
-
+    const { username, email, password, image, role, status } = req.body;
+    console.log(username, email, password, image, role, status);
     //cek user apakah ada
     try {
       let result = await Users.findAll({
@@ -34,7 +34,6 @@ class UsersController {
         //membuat hash password
         const salt = bcrypt.genSaltSync(10);
         const hashedPassword = bcrypt.hashSync(password, salt);
-
         try {
           let result = await Users.create({
             username,
@@ -42,6 +41,7 @@ class UsersController {
             password: hashedPassword,
             image,
             role,
+            status,
           });
 
           // res.status(200).send("berhasil menambahkan user: " + result);
