@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Register.scss";
 import Axios from "axios";
 import { API_URL } from "../../constant/API_URL";
@@ -6,8 +6,9 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import Annoucement from "../../components/Annoucements/Annoucements";
+import { connect } from "react-redux";
 
-const Register = () => {
+const Register = (props) => {
   const navigate = useNavigate();
   const [input, setInput] = useState({
     username: "",
@@ -74,6 +75,9 @@ const Register = () => {
     }
   };
 
+  if (props.userGlobal.id) {
+    navigate("/");
+  }
   return (
     <div className="register">
       <Annoucement />
@@ -149,4 +153,10 @@ const Register = () => {
   );
 };
 
-export default Register;
+const mapStateToProps = (state) => {
+  return {
+    userGlobal: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(Register);

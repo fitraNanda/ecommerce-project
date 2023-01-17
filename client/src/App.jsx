@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Home from "./pages/Home";
 import ProductPage from "./pages/ProductPage/ProductPage";
 import ProductList from "./pages/ProductList/ProductList";
@@ -7,8 +7,17 @@ import Login from "./pages/Login/Login";
 import Cart from "./pages/Cart/Cart";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Authentication from "./pages/Authentication/Authentication";
+import { connect } from "react-redux";
+import { loginUser } from "./redux/action/user";
 
-const App = () => {
+const App = (props) => {
+  useEffect(() => {
+    const userLocalStorage = localStorage.getItem("user");
+    if (userLocalStorage) {
+      props.loginUser(JSON.parse(userLocalStorage));
+    }
+  }, []);
+
   return (
     <BrowserRouter>
       <Routes>
@@ -25,4 +34,14 @@ const App = () => {
   );
 };
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    userGlobal: state.user,
+  };
+};
+
+const mapDispatchToProps = {
+  loginUser,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -2,7 +2,6 @@ const { Users } = require("../models");
 const bcrypt = require("bcryptjs");
 const { createToken } = require("../helper/createToken");
 const transporter = require("../helper/nodemailer");
-const jwt = require("jsonwebtoken");
 
 class UsersController {
   static async get(req, res) {
@@ -141,15 +140,16 @@ class UsersController {
 
       //password benar
 
-      const token = jwt.sign({ id: result[0].id }, "private123");
-      const { username, email, image, role, status } = result[0];
+      let token = createToken({ id: result[0].id });
+
+      const { id, username, email, image, role, status } = result[0];
 
       res
         .cookie("accessToken", token, {
           httpOnly: true,
         })
         .status(200)
-        .json({ username, email, image, role, status });
+        .json({ id, username, email, image, role, status });
     } catch (error) {
       res.status(500).send(error);
       console.log(error);

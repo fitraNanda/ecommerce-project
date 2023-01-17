@@ -5,8 +5,10 @@ import Annoucements from "../../components/Annoucements/Annoucements";
 import Axios from "axios";
 import { API_URL } from "../../constant/API_URL";
 import Swal from "sweetalert2";
+import { connect } from "react-redux";
+import { loginUser } from "../../redux/action/user";
 
-const Login = () => {
+const Login = (props) => {
   const navigate = useNavigate();
 
   const [input, setInput] = useState({
@@ -29,6 +31,8 @@ const Login = () => {
         withCredentials: true,
       });
 
+      localStorage.setItem("user", JSON.stringify(result.data));
+      props.loginUser(result.data);
       navigate("/");
     } catch (error) {
       Swal.fire({
@@ -40,6 +44,10 @@ const Login = () => {
       console.log(error);
     }
   };
+
+  if (props.userGlobal.id) {
+    navigate("/");
+  }
 
   return (
     <div className="login">
@@ -97,4 +105,14 @@ const Login = () => {
   );
 };
 
-export default Login;
+const mapStateToProps = (state) => {
+  return {
+    userGlobal: state.user,
+  };
+};
+
+const mapDispatchToProps = {
+  loginUser,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Navbar.scss";
 import SearchIcon from "@mui/icons-material/Search";
 import Badge from "@mui/material/Badge";
@@ -6,11 +6,13 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { useNavigate } from "react-router-dom";
 import Axios from "axios";
 import { API_URL } from "../../constant/API_URL";
+import { connect } from "react-redux";
 
-const Navbar = () => {
+const Navbar = (props) => {
   const navigate = useNavigate();
 
   const logout = async () => {
+    localStorage.removeItem("user");
     try {
       let result = await Axios.post(
         `${API_URL}/users/logout`,
@@ -20,6 +22,7 @@ const Navbar = () => {
         }
       );
       navigate("/login");
+      window.location.reload();
     } catch (error) {
       console.log(error);
     }
@@ -29,7 +32,7 @@ const Navbar = () => {
     <div className="navbar-container">
       <div className="wrapper">
         <div className="left">
-          <span className="language">EN</span>
+          <span className="language">ID</span>
           <div className="searchContainer">
             <input type="text" className="input" placeholder="Search" />
             <SearchIcon
@@ -42,23 +45,35 @@ const Navbar = () => {
             LAPAU BARU
           </h1>
         </div>
-        <div className="right">
-          <div className="menuItem" onClick={() => navigate("/register")}>
-            REGISTER
+        {props.userGlobal.id ? (
+          <div className="right">
+            <div className="menuItem">Hello {props.userGlobal.username}</div>
+            <button onClick={logout}>LOGOUT</button>
+            <div className="menuItem">
+              <Badge badgeContent={4} color="primary">
+                <ShoppingCartOutlinedIcon color="action" />
+              </Badge>
+            </div>
           </div>
-          <div className="menuItem" onClick={() => navigate("/login")}>
-            SIGN IN
+        ) : (
+          <div className="right">
+            <div className="menuItem" onClick={() => navigate("/register")}>
+              REGISTER
+            </div>
+            <div className="menuItem" onClick={() => navigate("/login")}>
+              SIGN IN
+            </div>
           </div>
-          <button onClick={logout}>LOGOUT</button>
-          <div className="menuItem">
-            <Badge badgeContent={4} color="primary">
-              <ShoppingCartOutlinedIcon color="action" />
-            </Badge>
-          </div>
-        </div>
+        )}
       </div>
     </div>
   );
 };
 
-export default Navbar;
+const mapStateToProps = (state) => {
+  return {
+    userGlobal: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(Navbar);

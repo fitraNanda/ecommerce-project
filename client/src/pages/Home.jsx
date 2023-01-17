@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Annoucements from "../components/Annoucements/Annoucements";
 import Categories from "../components/Categories/Categories";
 import Footer from "../components/Footer/Footer";
