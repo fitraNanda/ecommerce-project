@@ -123,6 +123,7 @@ class UsersController {
       if (!result.length) {
         //user tidak ketemu
         res.status(401).send("user not found!");
+        return;
       }
 
       //jika ketemu, 2. cek passwordnya

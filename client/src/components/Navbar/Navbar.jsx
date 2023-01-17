@@ -3,10 +3,27 @@ import "./Navbar.scss";
 import SearchIcon from "@mui/icons-material/Search";
 import Badge from "@mui/material/Badge";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Axios from "axios";
+import { API_URL } from "../../constant/API_URL";
 
 const Navbar = () => {
   const navigate = useNavigate();
+
+  const logout = async () => {
+    try {
+      let result = await Axios.post(
+        `${API_URL}/users/logout`,
+        {},
+        {
+          withCredentials: true,
+        }
+      );
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="navbar-container">
@@ -32,6 +49,7 @@ const Navbar = () => {
           <div className="menuItem" onClick={() => navigate("/login")}>
             SIGN IN
           </div>
+          <button onClick={logout}>LOGOUT</button>
           <div className="menuItem">
             <Badge badgeContent={4} color="primary">
               <ShoppingCartOutlinedIcon color="action" />

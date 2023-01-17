@@ -12,6 +12,6 @@ usersRouter.get("/", get);
 usersRouter.post("/register", register);
 usersRouter.patch("/verif", auth, verif);
 usersRouter.post("/login", login);
-usersRouter.get("/logout", logout);
+usersRouter.post("/logout", logout);
 
 module.exports = usersRouter;
