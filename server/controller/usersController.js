@@ -2,6 +2,7 @@ const { Users } = require("../models");
 const bcrypt = require("bcryptjs");
 const { createToken } = require("../helper/createToken");
 const transporter = require("../helper/nodemailer");
+const jwt = require("jsonwebtoken");
 
 class UsersController {
   static async get(req, res) {
@@ -134,16 +135,34 @@ class UsersController {
       if (!checkPassword) {
         //jika passwordnya salah
         res.status(401).send("wrong username or password");
+        return; //untuk menghentikan proses pembacaan kode ke bawah (agar tidak error)
       }
 
       //password benar
 
-      const token = jwt.sign({ id: data[0].id }, "secretkey");
-      const { password, ...others } = result[0];
+      const token = jwt.sign({ id: result[0].id }, "private123");
+      const { username, email, image, role, status } = result[0];
+
+      res
+        .cookie("accessToken", token, {
+          httpOnly: true,
+        })
+        .status(200)
+        .json({ username, email, image, role, status });
     } catch (error) {
       res.status(500).send(error);
       console.log(error);
     }
+  }
+
+  static async logout(req, res) {
+    res
+      .clearCookie("accessToken", {
+        secure: true,
+        sameSite: "none",
+      })
+      .status(200)
+      .json("User has been logout");
   }
 }
 module.exports = UsersController;
