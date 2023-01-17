@@ -61,7 +61,7 @@ class UsersController {
             // //token dikirim menggunakan nodemailer
             let mail = {
               from: `Admin <bagginsbilbo938@gmail.com>`,
-              to: `fitrananda05@gmail.com`,
+              to: `${email}`,
               subject: `Account verification`,
               html: `<p>Hai ${username}, silahkan verikasi akunmu</p><br></br><a href='http://localhost:3000/authentication/${token}'>Click Here</a>`,
             };
@@ -92,6 +92,57 @@ class UsersController {
     } catch (error) {
       console.log(error);
       res.status(500).send(error);
+    }
+  }
+
+  static async verif(req, res) {
+    const id = +req.user.id;
+    try {
+      let result = await Users.update(
+        { status: "verified" },
+        {
+          where: { id },
+        }
+      );
+      res.status(200).send(result);
+    } catch (error) {
+      res.status(500).send(error);
+      console.log(error);
+    }
+  }
+
+  static async login(req, res) {
+    // 1. check our user
+
+    try {
+      let result = await Users.findAll({
+        where: { username: req.body.username },
+      });
+
+      if (!result.length) {
+        //user tidak ketemu
+        res.status(401).send("user not found!");
+      }
+
+      //jika ketemu, 2. cek passwordnya
+
+      const checkPassword = bcrypt.compareSync(
+        req.body.password,
+        result[0].password
+      );
+
+      if (!checkPassword) {
+        //jika passwordnya salah
+        res.status(401).send("wrong username or password");
+      }
+
+      //password benar
+
+      const token = jwt.sign({ id: data[0].id }, "secretkey");
+      const { password, ...others } = result[0];
+    } catch (error) {
+      res.status(500).send(error);
+      console.log(error);
     }
   }
 }

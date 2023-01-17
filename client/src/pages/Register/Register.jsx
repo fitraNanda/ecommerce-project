@@ -90,7 +90,9 @@ const Register = () => {
             </h1>
           </div>
           <div className="right">
-            <div className="menuItem">SIGN IN</div>
+            <div className="menuItem" onClick={() => navigate("/login")}>
+              SIGN IN
+            </div>
           </div>
         </div>
       </div>

@@ -1,61 +1,67 @@
 @import "../../style.scss";
 
-.login-container {
-  width: 100vw;
+.login {
   height: 100vh;
-  background: linear-gradient(
-      rgba(255, 255, 255, 0.5),
-      rgba(255, 255, 255, 0.5)
-    ),
-    url("https://images.unsplash.com/photo-1525328437458-0c4d4db7cab4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80")
-      no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  overflow-y: hidden;
 
-  .login-wrapper {
-    padding: 20px;
-    width: 25%;
-    background-color: white;
+  .login-container {
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(
+        rgba(255, 255, 255, 0.5),
+        rgba(255, 255, 255, 0.5)
+      ),
+      url("https://images.unsplash.com/photo-1525328437458-0c4d4db7cab4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80")
+        no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    @include mobile {
-      width: 75%;
-    }
+    .login-wrapper {
+      padding: 20px;
+      width: 25%;
+      background-color: white;
+      margin-bottom: 300px;
 
-    .title {
-      font-size: 24px;
-      font-weight: 300;
-    }
-
-    .form {
-      display: flex;
-      flex-direction: column;
-
-      .input {
-        flex: 1;
-        min-width: 40%;
-        margin: 10px 0px;
-        padding: 10px;
+      @include mobile {
+        width: 75%;
       }
 
-      .button {
-        width: 40%;
-        border: none;
-        padding: 15px 20px;
-        background: teal;
-        color: white;
-        cursor: pointer;
-        margin-bottom: 10px;
+      .title {
+        font-size: 24px;
+        font-weight: 300;
       }
 
-      .link {
-        margin: 5px 0px;
-        font-size: 12px;
-        cursor: pointer;
+      .form {
+        display: flex;
+        flex-direction: column;
+
+        .input {
+          flex: 1;
+          min-width: 40%;
+          margin: 10px 0px;
+          padding: 10px;
+        }
+
+        .button {
+          width: 40%;
+          border: none;
+          padding: 15px 20px;
+          background: teal;
+          color: white;
+          cursor: pointer;
+          margin-bottom: 10px;
+        }
+
+        .link {
+          margin: 5px 0px;
+          font-size: 12px;
+          cursor: pointer;
+        }
       }
     }
   }

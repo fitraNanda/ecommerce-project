@@ -29,7 +29,9 @@ const Navbar = () => {
           <div className="menuItem" onClick={() => navigate("/register")}>
             REGISTER
           </div>
-          <div className="menuItem">SIGN IN</div>
+          <div className="menuItem" onClick={() => navigate("/login")}>
+            SIGN IN
+          </div>
           <div className="menuItem">
             <Badge badgeContent={4} color="primary">
               <ShoppingCartOutlinedIcon color="action" />
