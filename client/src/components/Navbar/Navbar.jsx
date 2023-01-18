@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./Navbar.scss";
 import SearchIcon from "@mui/icons-material/Search";
 import Badge from "@mui/material/Badge";
@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import Axios from "axios";
 import { API_URL } from "../../constant/API_URL";
 import { connect } from "react-redux";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const Navbar = (props) => {
   const navigate = useNavigate();
@@ -47,12 +48,23 @@ const Navbar = (props) => {
         </div>
         {props.userGlobal.id ? (
           <div className="right">
-            <div className="menuItem">Hello {props.userGlobal.username}</div>
-            <button onClick={logout}>LOGOUT</button>
             <div className="menuItem">
-              <Badge badgeContent={4} color="primary">
-                <ShoppingCartOutlinedIcon color="action" />
-              </Badge>
+              <div className="user">
+                <span>Hello {props.userGlobal.username}</span>{" "}
+                <span>
+                  <img
+                    className="profile"
+                    src={props.userGlobal.image}
+                    alt=""
+                  />
+                </span>
+              </div>
+            </div>
+            <div className="menuItem">
+              <ShoppingCartOutlinedIcon className="cart" />
+            </div>
+            <div className="menuItem">
+              <LogoutIcon className="logout-btn" onClick={logout} />
             </div>
           </div>
         ) : (

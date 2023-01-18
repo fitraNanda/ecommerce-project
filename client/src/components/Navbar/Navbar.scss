@@ -80,6 +80,62 @@
         font-size: 12px;
         margin-left: 10px;
       }
+      .user {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+
+        .profile {
+          margin-left: 5px;
+          border-radius: 50px;
+          height: 30px;
+          width: 30px;
+        }
+      }
+
+      .logout-btn:hover {
+        color: rgb(246, 89, 89);
+        cursor: pointer;
+      }
+
+      .cart:hover {
+        color: teal;
+      }
     }
   }
 }
+
+// .navbar-container {
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   padding: 30px;
+//   height: 60px;
+
+//   .logo {
+//     font-weight: bold;
+//     cursor: pointer;
+//     font-size: 30px;
+//   }
+//   .center {
+//     display: flex;
+//     justify-content: space-between;
+//     align-items: center;
+//     width: 25%;
+//   }
+
+//   .cta {
+//     .button {
+//       padding: 9px 25px;
+//       background-color: rgb(230, 70, 70);
+//       border: none;
+//       border-radius: 50px;
+//       cursor: pointer;
+//       transition: all 0.3s ease 0s;
+//     }
+
+//     .button:hover {
+//       background-color: aqua;
+//     }
+//   }
+// }
