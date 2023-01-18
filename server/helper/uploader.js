@@ -26,7 +26,7 @@ module.exports = {
       filename: (req, file, cb) => {
         let ext = file.originalname.split(".");
 
-        let filename = filenamePrefix + Date.now + "." + ext[ext.length - 1];
+        let filename = filenamePrefix + Date.now() + "." + ext[ext.length - 1];
 
         cb(null, filename);
       },
@@ -35,7 +35,7 @@ module.exports = {
     const fileFilter = (req, file, cb) => {
       const ext = /\.(jpg|jpeg|png|gif|pdf|txt|JPG|JPEG|PNG)/;
 
-      if (file.originalname.match(ext)) {
+      if (!file.originalname.match(ext)) {
         return cb(new Error("You file type are denied"), false);
       }
       cb(null, true);

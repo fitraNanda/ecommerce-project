@@ -9,6 +9,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Authentication from "./pages/Authentication/Authentication";
 import { connect } from "react-redux";
 import { loginUser } from "./redux/action/user";
+import Admin from "./pages/Admin/Admin";
 
 const App = (props) => {
   useEffect(() => {
@@ -26,7 +27,7 @@ const App = (props) => {
         <Route element={<Cart />} path="/cart" />
         <Route element={<ProductPage />} path="/product-page/:ProductId" />
         <Route element={<ProductList />} path="/product-list" />
-        {/* <Route component={Admin} path="/admin" /> */}
+        <Route element={<Admin />} path="/admin" />
         <Route element={<Authentication />} path="authentication/:token" />
         <Route element={<Home />} path="/" />
       </Routes>
