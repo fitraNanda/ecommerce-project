@@ -1,0 +1,69 @@
+$lfs-blue: #006ac6;
+$lfs-yellow: #fab700;
+$lfs-grey: #75787b;
+
+.admin-container {
+  height: 100vh;
+  background-color: #fcf5f5;
+
+  .container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    .inside {
+      width: 80%;
+      .table-latitude {
+        width: 100%;
+        border-collapse: collapse;
+
+        caption {
+          text-transform: uppercase;
+          font-weight: bold;
+          color: $lfs-yellow;
+          text-align: center;
+          margin-top: 50px;
+          margin-bottom: 20px;
+        }
+        thead {
+          border: 2px solid black;
+
+          th {
+            text-transform: uppercase;
+            text-align: center;
+            padding: 10px;
+            color: $lfs-blue;
+            border: 1px solid black;
+          }
+        }
+
+        tbody {
+          tr {
+            border-bottom: 1px solid black;
+            color: $lfs-grey;
+            td {
+              padding: 10px;
+              border: 1px solid black;
+            }
+            th {
+              padding-left: 10px;
+              border: 1px solid black;
+            }
+          }
+        }
+
+        tfoot {
+          color: $lfs-yellow;
+          font-style: italic;
+          border-bottom: 2px solid $lfs-yellow;
+          tr {
+            td {
+              padding: 10px;
+              border: 1px solid black;
+            }
+          }
+        }
+      }
+    }
+  }
+}
