@@ -1,21 +1,30 @@
 import React, { useState } from "react";
-import "../AdminPage/AdminPage.scss";
+import "../AdminPageUpdate/AdminPageUpdate.scss";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import { useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
+import { useEffect } from "react";
+import { connect } from "react-redux";
 
-const AdminPageDel = () => {
+const AdminPageDel = (props) => {
   const navigate = useNavigate();
+  const [gotData, setGotData] = useState(false);
+  const [search, setSearch] = useState("");
+  const [filterData, setFilterData] = useState([]);
 
-  const options = ["Kue", "Sembako", "Minuman"];
-  const [selected, setSelected] = useState(options[0]);
   const submit = (e) => {
     e.preventDefault();
-    console.log(selected);
   };
 
+  useEffect(() => {
+    let res = props.productGlobal.filter((val) => {
+      return val.name.toLowerCase().includes(search);
+    });
+    setFilterData(res);
+  }, [search]);
+
   return (
-    <div>
+    <div className="update-container">
       <div className="navbar-container">
         <div className="wrapper">
           <div className="left">
@@ -43,9 +52,9 @@ const AdminPageDel = () => {
           </div>
         </div>
       </div>
-      <div className="admin-container">
+      <div className="adminUpdate-container">
         <div className="register-container">
-          <div className="register-wrapper" style={{ marginTop: "180px" }}>
+          <div className="register-wrapper" style={{ marginTop: "50px" }}>
             <div className="title-container">
               <h1 className="title" onClick={() => navigate("/admin/page")}>
                 ADD PRODUCT
@@ -56,53 +65,84 @@ const AdminPageDel = () => {
               >
                 EDIT PRODUCT
               </h1>
-              <h1 style={{ borderBottom: "1px solid black" }} className="title">
+              <h1 className="title" style={{ borderBottom: "1px solid black" }}>
                 DELETE PRODUCT
               </h1>
             </div>
-            <form
-              className="form-search"
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                alignContent: "center",
-                marginTop: "25px",
-              }}
-            >
-              <input
-                type="text"
-                className="input"
-                style={{ width: "50%", padding: "10px" }}
-                placeholder="Search..."
-              />
-              <SearchIcon style={{ margin: "5px" }} />
-            </form>
-            <form className="form">
-              <input type="text" className="input" value="Name" name="name" />
-              <input
-                type="number"
-                className="input"
-                value="1000"
-                name="price"
-              />
-              <input
-                type="text"
-                className="input"
-                value="Description"
-                name="description"
-              />
-              <input type="text" className="input" value="Kue" />
-              <div className="filter">
-                <img
-                  style={{ width: "100px", height: "100px" }}
-                  src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8Y2FrZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
-                  alt=""
+            <div className="input-container">
+              <form
+                className="form-search"
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignContent: "center",
+                  marginTop: "25px",
+                }}
+              >
+                <input
+                  onChange={(e) => setSearch(e.target.value)}
+                  type="text"
+                  className="input"
+                  style={{ width: "50%", padding: "10px" }}
+                  placeholder="Search..."
                 />
-              </div>
-              <button className="button" onClick={submit}>
-                DELETE
-              </button>
-            </form>
+                <SearchIcon style={{ margin: "5px" }} />
+              </form>
+
+              {filterData.map((val) => {
+                if (!search) {
+                  return;
+                }
+                return (
+                  <div
+                    type="text"
+                    className="inputSearch"
+                    style={{
+                      width: "50%",
+                      padding: "10px",
+                      cursor: "pointer",
+
+                      border: "1px solid black",
+                    }}
+                  >
+                    {val.name}
+                  </div>
+                );
+              })}
+            </div>
+            {gotData ? (
+              <form className="form">
+                <input
+                  type="text"
+                  className="input"
+                  placeholder="Name"
+                  name="name"
+                />
+                <input
+                  type="number"
+                  className="input"
+                  placeholder="Price"
+                  name="price"
+                />
+                <input
+                  type="text"
+                  className="input"
+                  placeholder="Description"
+                  name="description"
+                />
+                <div className="filter">
+                  <img
+                    className="img"
+                    src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8Y2FrZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
+                    style={{ height: "200px", width: "200px" }}
+                  />
+                </div>
+
+                <button className="button" onClick={submit}>
+                  DELETE
+                </button>
+              </form>
+            ) : null}
           </div>
         </div>
       </div>
@@ -110,4 +150,10 @@ const AdminPageDel = () => {
   );
 };
 
-export default AdminPageDel;
+const mapStateToProps = (state) => {
+  return {
+    productGlobal: state.product,
+  };
+};
+
+export default connect(mapStateToProps)(AdminPageDel);

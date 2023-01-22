@@ -23,7 +23,7 @@ const AdminPage = () => {
     name: "",
     price: 0,
     description: "",
-    categoryId: 1,
+    CategoryId: 1,
   });
 
   function inputHandler(e) {
@@ -37,15 +37,15 @@ const AdminPage = () => {
     setSelected(e.target.value);
     if (e.target.value == "Kue") {
       setState((prev) => {
-        return { ...prev, categoryId: 1 };
+        return { ...prev, CategoryId: 1 };
       });
     } else if (e.target.value == "Sembako") {
       setState((prev) => {
-        return { ...prev, categoryId: 2 };
+        return { ...prev, CategoryId: 2 };
       });
     } else if (e.target.value == "Minuman") {
       setState((prev) => {
-        return { ...prev, categoryId: 3 };
+        return { ...prev, CategoryId: 3 };
       });
     }
   }
@@ -73,7 +73,7 @@ const AdminPage = () => {
         name: state.name,
         price: state.price,
         description: state.description,
-        categoryId: state.categoryId,
+        CategoryId: state.CategoryId,
       };
       formData.append("data", JSON.stringify(obj));
       formData.append("file", fileInput.addFile);

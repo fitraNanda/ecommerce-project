@@ -108,6 +108,7 @@ const Login = (props) => {
 const mapStateToProps = (state) => {
   return {
     userGlobal: state.user,
+    productGlobal: state.product,
   };
 };
 
