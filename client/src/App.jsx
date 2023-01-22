@@ -11,6 +11,8 @@ import { connect } from "react-redux";
 import { loginUser } from "./redux/action/user";
 import Admin from "./pages/Admin/Admin";
 import AdminPage from "./pages/AdminPage/AdminPage";
+import AdminPageDel from "./pages/AdminPageDel/AdminPageDel";
+import AdminPageUpdate from "./pages/AdminPageUpdate/AdminPageUpdate";
 
 const App = (props) => {
   useEffect(() => {
@@ -30,6 +32,8 @@ const App = (props) => {
         <Route element={<ProductList />} path="/product-list" />
         <Route element={<Admin />} path="/admin" />
         <Route element={<AdminPage />} path="/admin/page" />
+        <Route element={<AdminPageDel />} path="/admin/page/del" />
+        <Route element={<AdminPageUpdate />} path="/admin/page/update" />
         <Route element={<Authentication />} path="authentication/:token" />
         <Route element={<Home />} path="/" />
       </Routes>

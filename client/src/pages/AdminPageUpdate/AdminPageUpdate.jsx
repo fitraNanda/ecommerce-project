@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import "./AdminPage.scss";
+import "../AdminPage/AdminPage.scss";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import { useNavigate } from "react-router-dom";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
+import SearchIcon from "@mui/icons-material/Search";
 
-const AdminPage = () => {
+const AdminPageUpdate = () => {
   const navigate = useNavigate();
 
   const options = ["Kue", "Sembako", "Minuman"];
@@ -45,21 +46,35 @@ const AdminPage = () => {
       </div>
       <div className="admin-container">
         <div className="register-container">
-          <div className="register-wrapper">
+          <div className="register-wrapper" style={{ marginTop: "50px" }}>
             <div className="title-container">
-              <h1 className="title" style={{ borderBottom: "1px solid black" }}>
+              <h1 className="title" onClick={() => navigate("/admin/page")}>
                 ADD PRODUCT
               </h1>
-              <h1
-                className="title"
-                onClick={() => navigate("/admin/page/update")}
-              >
+              <h1 className="title" style={{ borderBottom: "1px solid black" }}>
                 EDIT PRODUCT
               </h1>
               <h1 className="title" onClick={() => navigate("/admin/page/del")}>
                 DELETE PRODUCT
               </h1>
             </div>
+            <form
+              className="form-search"
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                alignContent: "center",
+                marginTop: "25px",
+              }}
+            >
+              <input
+                type="text"
+                className="input"
+                style={{ width: "50%", padding: "10px" }}
+                placeholder="Search..."
+              />
+              <SearchIcon style={{ margin: "5px" }} />
+            </form>
             <form className="form">
               <input
                 type="text"
@@ -106,7 +121,7 @@ const AdminPage = () => {
               </div>
 
               <button className="button" onClick={submit}>
-                ADD
+                EDIT
               </button>
               <img
                 className="img-prev"
@@ -121,4 +136,4 @@ const AdminPage = () => {
   );
 };
 
-export default AdminPage;
+export default AdminPageUpdate;

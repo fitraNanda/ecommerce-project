@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import "./AdminPage.scss";
+import "../AdminPage/AdminPage.scss";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import { useNavigate } from "react-router-dom";
-import CameraAltIcon from "@mui/icons-material/CameraAlt";
+import SearchIcon from "@mui/icons-material/Search";
 
-const AdminPage = () => {
+const AdminPageDel = () => {
   const navigate = useNavigate();
 
   const options = ["Kue", "Sembako", "Minuman"];
@@ -45,9 +45,9 @@ const AdminPage = () => {
       </div>
       <div className="admin-container">
         <div className="register-container">
-          <div className="register-wrapper">
+          <div className="register-wrapper" style={{ marginTop: "180px" }}>
             <div className="title-container">
-              <h1 className="title" style={{ borderBottom: "1px solid black" }}>
+              <h1 className="title" onClick={() => navigate("/admin/page")}>
                 ADD PRODUCT
               </h1>
               <h1
@@ -56,63 +56,52 @@ const AdminPage = () => {
               >
                 EDIT PRODUCT
               </h1>
-              <h1 className="title" onClick={() => navigate("/admin/page/del")}>
+              <h1 style={{ borderBottom: "1px solid black" }} className="title">
                 DELETE PRODUCT
               </h1>
             </div>
-            <form className="form">
+            <form
+              className="form-search"
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                alignContent: "center",
+                marginTop: "25px",
+              }}
+            >
               <input
                 type="text"
                 className="input"
-                placeholder="Name"
-                name="name"
+                style={{ width: "50%", padding: "10px" }}
+                placeholder="Search..."
               />
+              <SearchIcon style={{ margin: "5px" }} />
+            </form>
+            <form className="form">
+              <input type="text" className="input" value="Name" name="name" />
               <input
                 type="number"
                 className="input"
-                placeholder="Price"
+                value="1000"
                 name="price"
               />
               <input
                 type="text"
                 className="input"
-                placeholder="Description"
+                value="Description"
                 name="description"
               />
+              <input type="text" className="input" value="Kue" />
               <div className="filter">
-                <select
-                  className="select"
-                  value={selected}
-                  onChange={(e) => {
-                    setSelected(e.target.value);
-                  }}
-                >
-                  {options.map((val) => {
-                    return (
-                      <option value={val} key={val}>
-                        {val}
-                      </option>
-                    );
-                  })}
-                </select>
-
-                <div>
-                  <label htmlFor="inputTag" className="input-field">
-                    <h6>Add image</h6>
-                    <CameraAltIcon />
-                    <input id="inputTag" type="file" className="input" />
-                  </label>
-                </div>
+                <img
+                  style={{ width: "100px", height: "100px" }}
+                  src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8Y2FrZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
+                  alt=""
+                />
               </div>
-
               <button className="button" onClick={submit}>
-                ADD
+                DELETE
               </button>
-              <img
-                className="img-prev"
-                src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8Y2FrZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
-                alt=""
-              />
             </form>
           </div>
         </div>
@@ -121,4 +110,4 @@ const AdminPage = () => {
   );
 };
 
-export default AdminPage;
+export default AdminPageDel;
