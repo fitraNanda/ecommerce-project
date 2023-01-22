@@ -20,6 +20,7 @@ app.use(
 app.use(express.urlencoded({ extended: true }));
 app.use(bearerToken());
 app.use(cookieParser());
+app.use(express.static("public"));
 
 const route = require("./routes");
 app.use(route);

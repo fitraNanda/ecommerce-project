@@ -4,6 +4,7 @@ const fs = require("fs");
 
 class ProductsController {
   static async uploadFile(req, res) {
+    console.log("ok");
     try {
       let path = "/images";
       const upload = uploader(path, "IMG").fields([{ name: "file" }]);
@@ -22,11 +23,11 @@ class ProductsController {
 
         try {
           let result = await Products.create({
-            name: "Donat",
-            price: 5000,
+            name: data.name,
+            price: data.price,
             image: filePath,
-            description: "Donat berbagai rasa yang enak",
-            CategoryId: 1,
+            description: data.description,
+            CategoryId: data.categoryId,
           });
           res.status(200).send(result);
         } catch (error) {
