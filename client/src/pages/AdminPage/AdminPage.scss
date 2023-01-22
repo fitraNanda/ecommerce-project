@@ -27,18 +27,20 @@
       background-color: white;
       margin-bottom: 300px;
 
-      @include mobile {
-        width: 75%;
-      }
-
-      .title {
-        font-size: 24px;
-        font-weight: 300;
+      .title-container {
+        display: flex;
+        justify-content: space-between;
+        .title {
+          font-size: 24px;
+          font-weight: 300;
+          cursor: pointer;
+        }
       }
 
       .form {
         display: flex;
         flex-direction: column;
+        position: relative;
 
         .filter {
           margin: 20px 0px;
@@ -85,6 +87,13 @@
           background: teal;
           color: white;
           cursor: pointer;
+        }
+        .img-prev {
+          height: 100px;
+          width: 100px;
+          position: absolute;
+          left: 50%;
+          bottom: 0;
         }
       }
     }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./AdminPage.scss";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import { useNavigate } from "react-router-dom";
@@ -6,6 +6,13 @@ import CameraAltIcon from "@mui/icons-material/CameraAlt";
 
 const AdminPage = () => {
   const navigate = useNavigate();
+
+  const options = ["Kue", "Sembako", "Minuman"];
+  const [selected, setSelected] = useState(options[0]);
+  const submit = (e) => {
+    e.preventDefault();
+    console.log(selected);
+  };
 
   return (
     <div>
@@ -39,7 +46,13 @@ const AdminPage = () => {
       <div className="admin-container">
         <div className="register-container">
           <div className="register-wrapper">
-            <h1 className="title">ADD PRODUCT</h1>
+            <div className="title-container">
+              <h1 className="title" style={{ borderBottom: "1px solid black" }}>
+                ADD PRODUCT
+              </h1>
+              <h1 className="title">EDIT PRODUCT</h1>
+              <h1 className="title">DELETE PRODUCT</h1>
+            </div>
             <form className="form">
               <input
                 type="text"
@@ -60,13 +73,20 @@ const AdminPage = () => {
                 name="description"
               />
               <div className="filter">
-                <select className="select">
-                  <option className="option" disabled selected>
-                    Category
-                  </option>
-                  <option className="option">Kue</option>
-                  <option className="option">Sembako</option>
-                  <option className="option">Minuman</option>
+                <select
+                  className="select"
+                  value={selected}
+                  onChange={(e) => {
+                    setSelected(e.target.value);
+                  }}
+                >
+                  {options.map((val) => {
+                    return (
+                      <option value={val} key={val}>
+                        {val}
+                      </option>
+                    );
+                  })}
                 </select>
 
                 <div>
@@ -78,7 +98,14 @@ const AdminPage = () => {
                 </div>
               </div>
 
-              <button className="button">CREATE</button>
+              <button className="button" onClick={submit}>
+                ADD
+              </button>
+              <img
+                className="img-prev"
+                src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8Y2FrZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
+                alt=""
+              />
             </form>
           </div>
         </div>
