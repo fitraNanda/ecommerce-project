@@ -41,7 +41,10 @@ class ProductsController {
 
   static async get(req, res) {
     try {
-      let result = await Products.findAll({ include: [Categories] });
+      let result = await Products.findAll({
+        include: [Categories],
+        order: [["id", "ASC"]],
+      });
       res.status(200).send(result);
     } catch (error) {
       console.log(error);
