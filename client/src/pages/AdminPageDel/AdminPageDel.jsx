@@ -5,6 +5,10 @@ import { useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import { useEffect } from "react";
 import { connect } from "react-redux";
+import { API_URL } from "../../constant/API_URL";
+import Axios from "axios";
+import Swal from "sweetalert2";
+import { getProduct } from "../../redux/action/product";
 
 const AdminPageDel = (props) => {
   const navigate = useNavigate();
@@ -12,8 +16,21 @@ const AdminPageDel = (props) => {
   const [search, setSearch] = useState("");
   const [filterData, setFilterData] = useState([]);
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
+
+    try {
+      let result = await Axios.post(
+        `${API_URL}/products/delete/${gotData.id}`,
+        { image: gotData.image }
+      );
+      console.log(result.data);
+      Swal.fire("Good job!", "Berhasil hapus produk!", "success");
+      props.getProduct();
+      setGotData(null);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -85,6 +102,7 @@ const AdminPageDel = (props) => {
                   className="input"
                   style={{ width: "50%", padding: "10px" }}
                   placeholder="Search..."
+                  value={search}
                 />
                 <SearchIcon style={{ margin: "5px" }} />
               </form>
@@ -95,6 +113,10 @@ const AdminPageDel = (props) => {
                 }
                 return (
                   <div
+                    onClick={() => {
+                      setGotData(val);
+                      setSearch("");
+                    }}
                     type="text"
                     className="inputSearch"
                     style={{
@@ -117,23 +139,30 @@ const AdminPageDel = (props) => {
                   className="input"
                   placeholder="Name"
                   name="name"
+                  disabled
+                  value={`${gotData.name} / ${gotData.stock}`}
                 />
                 <input
                   type="number"
                   className="input"
                   placeholder="Price"
                   name="price"
+                  disabled
+                  value={gotData.price}
                 />
                 <input
                   type="text"
                   className="input"
                   placeholder="Description"
                   name="description"
+                  value={gotData.description}
+                  disabled
                 />
+
                 <div className="filter">
                   <img
                     className="img"
-                    src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8Y2FrZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
+                    src={`${API_URL}/${gotData.image}`}
                     style={{ height: "200px", width: "200px" }}
                   />
                 </div>
@@ -156,4 +185,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(AdminPageDel);
+const mapDispatchToProps = {
+  getProduct,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AdminPageDel);

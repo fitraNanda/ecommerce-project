@@ -26,6 +26,7 @@ class ProductsController {
             price: data.price,
             image: filePath,
             description: data.description,
+            stock: data.stock,
             CategoryId: data.CategoryId,
           });
           res.status(200).send(result);
@@ -75,15 +76,18 @@ class ProductsController {
             {
               name: data.name,
               price: data.price,
-              image: filePath,
+              image: filePath ? filePath : data.image,
               description: data.description,
+              stock: data.stock,
               CategoryId: data.CategoryId,
             },
             {
               where: { id },
             }
           );
-          fs.unlinkSync("./public" + data.image);
+          if (filePath) {
+            fs.unlinkSync("./public" + data.image);
+          }
           res.status(200).send(result);
         } catch (error) {
           fs.unlinkSync("./public" + filePath);
@@ -92,6 +96,21 @@ class ProductsController {
       });
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  static async deleteFile(req, res) {
+    const id = +req.params.id;
+
+    try {
+      let result = await Products.destroy({
+        where: { id },
+      });
+
+      fs.unlinkSync("./public" + req.body.image);
+      res.status(200).sendStatus(200);
+    } catch (error) {
+      res.status(500).send(error);
     }
   }
 }

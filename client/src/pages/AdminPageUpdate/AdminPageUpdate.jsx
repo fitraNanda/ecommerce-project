@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 import { API_URL } from "../../constant/API_URL";
 import Axios from "axios";
 import Swal from "sweetalert2";
+import { getProduct } from "../../redux/action/product";
 
 const AdminPageUpdate = (props) => {
   const navigate = useNavigate();
@@ -42,28 +43,35 @@ const AdminPageUpdate = (props) => {
 
   const submit = (e) => {
     e.preventDefault();
-    if (fileInput.addFile) {
-      let formData = new FormData();
-      let obj = {
-        name: gotData.name,
-        price: gotData.price,
-        description: gotData.description,
-        CategoryId: gotData.categoryId,
-        image: gotData.image,
-      };
-      formData.append("data", JSON.stringify(obj));
-      formData.append("file", fileInput.addFile);
-      Axios.post(`${API_URL}/products/update/${gotData.id}`, formData)
-        .then((res) => {
-          Swal.fire("Good job!", "Berhasil edit produk!", "success");
 
-          console.log(res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+    let formData = new FormData();
+    let obj = {
+      name: gotData.name,
+      price: gotData.price,
+      description: gotData.description,
+      stock: gotData.stock,
+      CategoryId: gotData.categoryId,
+      image: gotData.image,
+    };
+    formData.append("data", JSON.stringify(obj));
+    formData.append("file", fileInput.addFile);
+    Axios.post(`${API_URL}/products/update/${gotData.id}`, formData)
+      .then((res) => {
+        Swal.fire("Good job!", "Berhasil edit produk!", "success");
+        props.getProduct();
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
+
+  function inputHandler(e) {
+    let { name, value } = e.target;
+    setGotData((prev) => {
+      return { ...prev, [name]: value };
+    });
+  }
 
   useEffect(() => {
     let res = props.productGlobal.filter((val) => {
@@ -170,6 +178,7 @@ const AdminPageUpdate = (props) => {
                   placeholder="Name"
                   name="name"
                   value={gotData.name}
+                  onChange={inputHandler}
                 />
                 <input
                   type="number"
@@ -177,6 +186,7 @@ const AdminPageUpdate = (props) => {
                   placeholder="Price"
                   name="price"
                   value={gotData.price}
+                  onChange={inputHandler}
                 />
                 <input
                   type="text"
@@ -184,11 +194,28 @@ const AdminPageUpdate = (props) => {
                   placeholder="Description"
                   name="description"
                   value={gotData.description}
+                  onChange={inputHandler}
+                />
+                <input
+                  type="number"
+                  className="input"
+                  placeholder="Stock"
+                  name="stock"
+                  value={gotData.stock}
+                  onChange={inputHandler}
                 />
                 <div className="filter">
                   <select
                     className="select"
-                    value={selected}
+                    value={
+                      gotData.CategoryId == 1
+                        ? "Kue"
+                        : gotData.CategoryId == 2
+                        ? "Sembako"
+                        : gotData.CategoryId == 3
+                        ? "Minuman"
+                        : null
+                    }
                     onChange={(e) => {
                       setSelected(e.target.value);
                       setGotData((prev) => {
@@ -253,4 +280,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(AdminPageUpdate);
+const mapDispatchToProps = {
+  getProduct,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AdminPageUpdate);

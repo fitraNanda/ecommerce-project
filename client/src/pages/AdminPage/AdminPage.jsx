@@ -6,8 +6,10 @@ import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import Axios from "axios";
 import { API_URL } from "../../constant/API_URL";
 import Swal from "sweetalert2";
+import { getProduct } from "../../redux/action/product";
+import { connect } from "react-redux";
 
-const AdminPage = () => {
+const AdminPage = (props) => {
   const navigate = useNavigate();
   const options = ["Kue", "Sembako", "Minuman"];
   const [selected, setSelected] = useState(options[0]);
@@ -23,6 +25,7 @@ const AdminPage = () => {
     name: "",
     price: 0,
     description: "",
+    stock: 0,
     CategoryId: 1,
   });
 
@@ -73,6 +76,7 @@ const AdminPage = () => {
         name: state.name,
         price: state.price,
         description: state.description,
+        stock: state.stock,
         CategoryId: state.CategoryId,
       };
       formData.append("data", JSON.stringify(obj));
@@ -80,7 +84,7 @@ const AdminPage = () => {
       Axios.post(`${API_URL}/products/upload`, formData)
         .then((res) => {
           Swal.fire("Good job!", "Berhasil menambahkan produk!", "success");
-
+          props.getProduct();
           console.log(res.data);
         })
         .catch((err) => {
@@ -90,7 +94,7 @@ const AdminPage = () => {
   }
 
   return (
-    <div>
+    <div className="admin-container">
       <div className="navbar-container">
         <div className="wrapper">
           <div className="left">
@@ -118,87 +122,101 @@ const AdminPage = () => {
           </div>
         </div>
       </div>
-      <div className="admin-container">
-        <div className="register-container">
-          <div className="register-wrapper">
-            <div className="title-container">
-              <h1 className="title" style={{ borderBottom: "1px solid black" }}>
-                ADD PRODUCT
-              </h1>
-              <h1
-                className="title"
-                onClick={() => navigate("/admin/page/update")}
-              >
-                EDIT PRODUCT
-              </h1>
-              <h1 className="title" onClick={() => navigate("/admin/page/del")}>
-                DELETE PRODUCT
-              </h1>
-            </div>
-            <form className="form">
-              <input
-                type="text"
-                className="input"
-                placeholder="Name"
-                name="name"
-                onChange={inputHandler}
-              />
-              <input
-                type="number"
-                className="input"
-                placeholder="Price"
-                name="price"
-                onChange={inputHandler}
-              />
-              <input
-                type="text"
-                className="input"
-                placeholder="Description"
-                name="description"
-                onChange={inputHandler}
-              />
-              <div className="filter">
-                <select
-                  className="select"
-                  value={selected}
-                  onChange={selectHandler}
-                >
-                  {options.map((val) => {
-                    return (
-                      <option value={val} key={val}>
-                        {val}
-                      </option>
-                    );
-                  })}
-                </select>
 
-                <div>
-                  <label htmlFor="inputTag" className="input-field">
-                    <h6>Add image</h6>
-                    <CameraAltIcon />
-                    <input
-                      id="inputTag"
-                      type="file"
-                      className="input"
-                      name="addFile"
-                      onChange={fileHandler}
-                    />
-                  </label>
-                </div>
-              </div>
-
-              <button className="button" onClick={submit}>
-                ADD
-              </button>
-              {preview ? (
-                <img className="img-prev" src={preview} alt="" />
-              ) : null}
-            </form>
+      <div className="register-container">
+        <div className="register-wrapper">
+          <div className="title-container">
+            <h1 className="title" style={{ borderBottom: "1px solid black" }}>
+              ADD PRODUCT
+            </h1>
+            <h1
+              className="title"
+              onClick={() => navigate("/admin/page/update")}
+            >
+              EDIT PRODUCT
+            </h1>
+            <h1 className="title" onClick={() => navigate("/admin/page/del")}>
+              DELETE PRODUCT
+            </h1>
           </div>
+          <form className="form">
+            <input
+              type="text"
+              className="input"
+              placeholder="Name"
+              name="name"
+              onChange={inputHandler}
+            />
+            <input
+              type="number"
+              className="input"
+              placeholder="Price"
+              name="price"
+              onChange={inputHandler}
+            />
+            <input
+              type="text"
+              className="input"
+              placeholder="Description"
+              name="description"
+              onChange={inputHandler}
+            />
+            <input
+              type="number"
+              className="input"
+              placeholder="Stock"
+              name="stock"
+              onChange={inputHandler}
+            />
+            <div className="filter">
+              <select
+                className="select"
+                value={selected}
+                onChange={selectHandler}
+              >
+                {options.map((val) => {
+                  return (
+                    <option value={val} key={val}>
+                      {val}
+                    </option>
+                  );
+                })}
+              </select>
+
+              <div>
+                <label htmlFor="inputTag" className="input-field">
+                  <h6>Add image</h6>
+                  <CameraAltIcon />
+                  <input
+                    id="inputTag"
+                    type="file"
+                    className="input"
+                    name="addFile"
+                    onChange={fileHandler}
+                  />
+                </label>
+              </div>
+            </div>
+
+            <button className="button" onClick={submit}>
+              ADD
+            </button>
+            {preview ? <img className="img-prev" src={preview} alt="" /> : null}
+          </form>
         </div>
       </div>
     </div>
   );
 };
 
-export default AdminPage;
+const mapStateToProps = (state) => {
+  return {
+    productGlobal: state.product,
+  };
+};
+
+const mapDispatchToProps = {
+  getProduct,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AdminPage);
