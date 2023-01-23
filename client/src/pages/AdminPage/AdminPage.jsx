@@ -95,7 +95,7 @@ const AdminPage = (props) => {
 
   return (
     <div className="admin-container">
-      <div className="navbar-container">
+      <div className="navbar-container" style={{ backgroundColor: "white" }}>
         <div className="wrapper">
           <div className="left">
             <span style={{ cursor: "pointer" }} onClick={() => navigate("/")}>

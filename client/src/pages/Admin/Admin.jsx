@@ -5,6 +5,8 @@ import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../../redux/action/user";
 import SettingsIcon from "@mui/icons-material/Settings";
+import { getProduct } from "../../redux/action/product";
+import { API_URL } from "../../constant/API_URL";
 
 const Admin = (props) => {
   const navigate = useNavigate();
@@ -50,11 +52,8 @@ const Admin = (props) => {
   }
 
   useEffect(() => {
-    const userLocalStorage = localStorage.getItem("user");
-    if (!userLocalStorage || JSON.parse(userLocalStorage).role !== "admin") {
-      navigate("/");
-    }
-  });
+    props.getProduct();
+  }, []);
 
   return (
     <div>
@@ -88,23 +87,30 @@ const Admin = (props) => {
                 <th>Price</th>
                 <th>Image</th>
                 <th>Description</th>
+                <th>Stock</th>
                 <th>Category</th>
               </thead>
               <tbody>
-                <tr>
-                  <th>1</th>
-                  <td>Technical Writer</td>
-                  <td>robyn@mail.com</td>
-                  <td>1</td>
-                  <td>Technical Writer</td>
-                  <td>robyn@mail.com</td>
-                </tr>
+                {props.productGlobal.map((val, i) => {
+                  return (
+                    <tr>
+                      <th>{i + 1}</th>
+                      <td>{val.name}</td>
+                      <td>{val.price}</td>
+                      <td>
+                        <img
+                          style={{ width: "50px", height: "50px" }}
+                          src={`${API_URL}/${val.image}`}
+                          alt=""
+                        />
+                      </td>
+                      <td>{val.description}</td>
+                      <td>{val.stock}</td>
+                      <td>{val.Category.name}</td>
+                    </tr>
+                  );
+                })}
               </tbody>
-              <tfoot>
-                <tr>
-                  <td colSpan={6}>Contact details for the knowledge</td>
-                </tr>
-              </tfoot>
             </table>
           </div>
         </div>
@@ -115,12 +121,12 @@ const Admin = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    userGlobal: state.user,
+    productGlobal: state.product,
   };
 };
 
 const mapDispatchToProps = {
-  loginUser,
+  getProduct,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Admin);
