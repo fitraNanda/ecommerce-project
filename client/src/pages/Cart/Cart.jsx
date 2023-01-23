@@ -6,8 +6,9 @@ import Navbar from "../../components/Navbar/Navbar";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { useNavigate } from "react-router-dom";
+import { connect } from "react-redux";
 
-const Cart = () => {
+const Cart = (props) => {
   const navigate = useNavigate();
 
   return (
@@ -29,7 +30,9 @@ const Cart = () => {
             Continue Shopping
           </button>
           <div className="top-texts">
-            <span className="top-text">Shopping Cart(2)</span>
+            <span className="top-text">
+              Shopping Cart({props.cartGlobal.length})
+            </span>
             <span className="top-text">Your Whistlist(0)</span>
           </div>
           <button
@@ -144,4 +147,11 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+const mapStateToProps = (state) => {
+  return {
+    userGlobal: state.user,
+    cartGlobal: state.cart,
+  };
+};
+
+export default connect(mapStateToProps)(Cart);
