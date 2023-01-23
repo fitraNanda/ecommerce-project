@@ -11,6 +11,8 @@ import { API_URL } from "../../constant/API_URL";
 import { useNavigate, useParams } from "react-router-dom";
 import Axios from "axios";
 import { getProductId } from "../../redux/action/product";
+import { getCart } from "../../redux/action/cart";
+import Swal from "sweetalert2";
 
 const Product = (props) => {
   const navigate = useNavigate();
@@ -31,25 +33,22 @@ const Product = (props) => {
   };
 
   const submit = () => {
-    console.log({
-      UserId: props.userGlobal.id,
-      ProductId: parseInt(params.productId),
-      quantity: qty,
-      isPay: false,
-    });
-
-    // Axios.post(`${API_URL}/carts/add`, {
-    //   UserId: 1,
-    //   ProductId: 4,
-    //   quantity: 9,
-    //   isPay: false,
-    // })
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    if (props.userGlobal.id) {
+      Axios.post(`${API_URL}/carts/add`, {
+        UserId: props.userGlobal.id,
+        ProductId: parseInt(params.productId),
+        quantity: qty,
+        isPay: false,
+      })
+        .then((res) => {
+          console.log(res);
+          props.getCart(props.userGlobal.id);
+          Swal.fire("Good job!", "Berhasil Menambahkan Produk!", "success");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   useEffect(() => {
@@ -113,6 +112,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   getProductId,
+  getCart,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Product);

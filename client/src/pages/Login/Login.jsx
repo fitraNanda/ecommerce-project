@@ -7,6 +7,7 @@ import { API_URL } from "../../constant/API_URL";
 import Swal from "sweetalert2";
 import { connect } from "react-redux";
 import { loginUser } from "../../redux/action/user";
+import { getCart } from "../../redux/action/cart";
 
 const Login = (props) => {
   const navigate = useNavigate();
@@ -33,6 +34,7 @@ const Login = (props) => {
 
       localStorage.setItem("user", JSON.stringify(result.data));
       props.loginUser(result.data);
+      props.getCart(result.data.id);
       navigate("/");
     } catch (error) {
       Swal.fire({
@@ -114,6 +116,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   loginUser,
+  getCart,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -10,6 +10,7 @@ import Authentication from "./pages/Authentication/Authentication";
 import { connect } from "react-redux";
 import { loginUser } from "./redux/action/user";
 import { getProduct } from "./redux/action/product";
+import { getCartKeep } from "./redux/action/cart";
 import Admin from "./pages/Admin/Admin";
 import AdminPage from "./pages/AdminPage/AdminPage";
 import AdminPageDel from "./pages/AdminPageDel/AdminPageDel";
@@ -18,6 +19,10 @@ import AdminPageUpdate from "./pages/AdminPageUpdate/AdminPageUpdate";
 const App = (props) => {
   useEffect(() => {
     props.getProduct();
+    const dataCart = JSON.parse(localStorage.getItem("cart"));
+    if (dataCart) {
+      props.getCartKeep(dataCart);
+    }
 
     const userLocalStorage = localStorage.getItem("user");
     if (userLocalStorage) {
@@ -48,12 +53,14 @@ const mapStateToProps = (state) => {
   return {
     userGlobal: state.user,
     productGlobal: state.product,
+    cartGlobal: state.cart,
   };
 };
 
 const mapDispatchToProps = {
   loginUser,
   getProduct,
+  getCartKeep,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

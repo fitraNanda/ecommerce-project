@@ -61,7 +61,7 @@ const Navbar = (props) => {
               </div>
             </div>
             <div className="menuItem">
-              <Badge badgeContent={4} color="primary">
+              <Badge badgeContent={props.cartGlobal.length} color="primary">
                 <ShoppingCartOutlinedIcon
                   color="black"
                   onClick={() => navigate("/cart")}
@@ -90,6 +90,7 @@ const Navbar = (props) => {
 const mapStateToProps = (state) => {
   return {
     userGlobal: state.user,
+    cartGlobal: state.cart,
   };
 };
 
