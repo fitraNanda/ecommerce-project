@@ -5,19 +5,26 @@ import Footer from "../../components/Footer/Footer";
 import Navbar from "../../components/Navbar/Navbar";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="cart-container">
-      <Navbar />
       <Annoucements />
-
+      <Navbar />
+      <div
+        className="border"
+        style={{ borderTop: "1px solid lightgray", width: "100%" }}
+      ></div>
       <div className="cart-wrapper">
         <h1 className="title">Your Cart</h1>
         <div className="top">
           <button
             className="top-button"
             style={{ backgroundColor: "transparent" }}
+            onClick={() => navigate("/product-list")}
           >
             Continue Shopping
           </button>

@@ -61,7 +61,12 @@ const Navbar = (props) => {
               </div>
             </div>
             <div className="menuItem">
-              <ShoppingCartOutlinedIcon className="cart" />
+              <Badge badgeContent={4} color="primary">
+                <ShoppingCartOutlinedIcon
+                  color="black"
+                  onClick={() => navigate("/cart")}
+                />
+              </Badge>
             </div>
             <div className="menuItem">
               <LogoutIcon className="logout-btn" onClick={logout} />

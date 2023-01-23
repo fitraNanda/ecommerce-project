@@ -8,8 +8,40 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { connect } from "react-redux";
 import { API_URL } from "../../constant/API_URL";
+import { useNavigate } from "react-router-dom";
+import Axios from "axios";
 
 const Product = (props) => {
+  const navigate = useNavigate();
+  const [qty, setQty] = useState(1);
+
+  const addBtn = () => {
+    setQty(qty + 1);
+  };
+
+  const minBtn = () => {
+    if (qty > 1) {
+      setQty(qty - 1);
+    } else {
+      return;
+    }
+  };
+
+  const submit = () => {
+    Axios.post(`${API_URL}/carts/add`, {
+      UserId: 1,
+      ProductId: 4,
+      quantity: 9,
+      isPay: false,
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div className="productPage-container">
       <Annoucements />
@@ -18,6 +50,19 @@ const Product = (props) => {
         className="border"
         style={{ borderTop: "1px solid lightgray", width: "100%" }}
       ></div>
+      <button
+        className="top-button"
+        style={{
+          backgroundColor: "transparent",
+          padding: "10px",
+          fontWeight: "600",
+          cursor: "pointer",
+          margin: "10px",
+        }}
+        onClick={() => navigate("/product-list")}
+      >
+        Continue Shopping
+      </button>
       <div className="productPage-wrapper">
         <div className="img-container">
           <img
@@ -33,11 +78,13 @@ const Product = (props) => {
 
           <div className="add-container">
             <div className="amount-container">
-              <RemoveIcon />
-              <span className="amount">99</span>
-              <AddIcon />
+              <RemoveIcon onClick={minBtn} style={{ cursor: "pointer" }} />
+              <span className="amount">{qty}</span>
+              <AddIcon onClick={addBtn} style={{ cursor: "pointer" }} />
             </div>
-            <button className="button">add to cart</button>
+            <button className="button" onClick={submit}>
+              add to cart
+            </button>
           </div>
         </div>
       </div>
