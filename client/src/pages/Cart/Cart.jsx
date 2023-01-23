@@ -71,15 +71,18 @@ const Cart = (props) => {
       });
   };
 
+  const checkout = () => {};
+
+  const subTotal = () => {
+    let final = 0;
+    for (let i = 0; i < props.cartGlobal.length; i++) {
+      final += props.cartGlobal[i].Product.price * props.cartGlobal[i].quantity;
+    }
+    return final;
+  };
+
   return (
     <div className="cart-container">
-      <button
-        onClick={() => {
-          console.log(props.getCart(props.userGlobal.id));
-        }}
-      >
-        ok
-      </button>
       <Annoucements />
       <Navbar />
       <div
@@ -188,24 +191,30 @@ const Cart = (props) => {
             <h1 className="summary-title">ORDER SUMMARY</h1>
             <div className="summary-item">
               <span className="summary-item-text">Subtotal</span>
-              <span className="summary-item-price">Rp.{}</span>
+              <span className="summary-item-price">
+                {formatRupiah(subTotal())}
+              </span>
             </div>
             <div className="summary-item">
               <span className="summary-item-text">Estimated Shipping</span>
-              <span className="summary-item-price">RP.10.000</span>
+              <span className="summary-item-price">{formatRupiah(10000)}</span>
             </div>
             <div className="summary-item">
               <span className="summary-item-text">Discount</span>
-              <span className="summary-item-price">RP.5.000</span>
+              <span className="summary-item-price">{formatRupiah(5000)}</span>
             </div>
             <div
               className="summary-item"
               style={{ fontSize: "24px", fontWeight: "500" }}
             >
               <span className="summary-item-text">Total</span>
-              <span className="summary-item-price">RP.90.000</span>
+              <span className="summary-item-price">
+                {formatRupiah(subTotal() + 10000 + 5000)}
+              </span>
             </div>
-            <button className="button">CHEKOUT NOW</button>
+            <button className="button" onClick={checkout}>
+              CHEKOUT NOW
+            </button>
           </div>
         </div>
       </div>
