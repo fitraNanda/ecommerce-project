@@ -32,6 +32,14 @@ const Product = (props) => {
     }
   };
 
+  const formatRupiah = (money) => {
+    return new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
+      minimumFractionDigits: 0,
+    }).format(money);
+  };
+
   const submit = () => {
     if (props.userGlobal.id) {
       Axios.post(`${API_URL}/carts/add`, {
@@ -84,7 +92,7 @@ const Product = (props) => {
         <div className="info-container">
           <h1 className="title">{data[0].name}</h1>
           <p className="description">{data[0].description}</p>
-          <span className="price">{data[0].price}</span>
+          <span className="price">{formatRupiah(data[0].price)}</span>
 
           <div className="add-container">
             <div className="amount-container">

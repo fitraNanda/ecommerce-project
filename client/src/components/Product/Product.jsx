@@ -14,6 +14,14 @@ const Product = (props) => {
     props.getProductId(id);
   };
 
+  const formatRupiah = (money) => {
+    return new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
+      minimumFractionDigits: 0,
+    }).format(money);
+  };
+
   return (
     <div
       className="product-container"
@@ -24,7 +32,7 @@ const Product = (props) => {
       </div>
       <div className="name">
         <h3 className="product-name">{props.item.name}</h3>
-        <h4 className="product-name">{props.item.price}</h4>
+        <h4 className="product-name">{formatRupiah(props.item.price)}</h4>
       </div>
       <div className="info">
         <div className="icon">

@@ -7,12 +7,79 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
+import { API_URL } from "../../constant/API_URL";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { getCart } from "../../redux/action/cart";
+import Axios from "axios";
 
 const Cart = (props) => {
   const navigate = useNavigate();
 
+  const submitRight = (val) => {
+    if (props.userGlobal.id) {
+      Axios.post(`${API_URL}/carts/add/cart`, {
+        id: val.id,
+        UserId: val.UserId,
+        ProductId: val.ProductId,
+        quantity: val.quantity + 1,
+        isPay: val.isPay,
+      })
+        .then((res) => {
+          console.log(res);
+          props.getCart(props.userGlobal.id);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
+  const submitLeft = (val) => {
+    if (props.userGlobal.id && val.quantity > 1) {
+      Axios.post(`${API_URL}/carts/add/cart`, {
+        id: val.id,
+        UserId: val.UserId,
+        ProductId: val.ProductId,
+        quantity: val.quantity - 1,
+        isPay: val.isPay,
+      })
+        .then((res) => {
+          console.log(res);
+          props.getCart(props.userGlobal.id);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
+  const formatRupiah = (money) => {
+    return new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
+      minimumFractionDigits: 0,
+    }).format(money);
+  };
+
+  const deleteCart = (id) => {
+    Axios.get(`${API_URL}/carts/delete/${id}`)
+      .then((res) => {
+        props.getCart(props.userGlobal.id);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div className="cart-container">
+      <button
+        onClick={() => {
+          console.log(props.getCart(props.userGlobal.id));
+        }}
+      >
+        ok
+      </button>
       <Annoucements />
       <Navbar />
       <div
@@ -38,89 +105,90 @@ const Cart = (props) => {
           <button
             className="top-button"
             style={{ border: "none", backgroundColor: "black", color: "white" }}
+            onClick={() => navigate("/")}
           >
-            Checkout Now
+            To Homepage
           </button>
         </div>
         <div className="bottom">
           <div className="info">
-            <div className="product">
-              <div className="product-detail">
-                <img
-                  src="https://images.unsplash.com/photo-1608270586620-248524c67de9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8YmVlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
-                  className="image"
-                  alt=""
-                />
-                <div className="details">
-                  <span className="product-name">
-                    <b>Product:</b>
-                    Minuman
-                  </span>
-                  <span className="product-id">
-                    <b>ID:</b>
-                    89796875
-                  </span>
-                  <div
-                    className="product-color"
-                    style={{ backgroundColor: "orange" }}
-                  />
-                  <span className="product-size">
-                    <b>Size:</b>
-                    XL
-                  </span>
-                </div>
-              </div>
-              <div className="price-detail">
-                <div className="product-amount-container">
-                  <AddIcon />
-                  <div className="product-amount">2</div>
-                  <RemoveIcon />
-                </div>
-                <div className="product-price">RP.30.000</div>
-              </div>
-            </div>
-            <div className="HR" />
-            <div className="product">
-              <div className="product-detail">
-                <img
-                  src="https://images.unsplash.com/photo-1608270586620-248524c67de9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8YmVlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
-                  className="image"
-                  alt=""
-                />
-                <div className="details">
-                  <span className="product-name">
-                    <b>Product:</b>
-                    Minuman
-                  </span>
-                  <span className="product-id">
-                    <b>ID:</b>
-                    89796875
-                  </span>
-                  <div
-                    className="product-color"
-                    style={{ backgroundColor: "orange" }}
-                  />
-                  <span className="product-size">
-                    <b>Size:</b>
-                    XL
-                  </span>
-                </div>
-              </div>
-              <div className="price-detail">
-                <div className="product-amount-container">
-                  <AddIcon />
-                  <div className="product-amount">2</div>
-                  <RemoveIcon />
-                </div>
-                <div className="product-price">RP.30.000</div>
-              </div>
-            </div>
+            {props.cartGlobal.map((val) => {
+              return (
+                <>
+                  <div className="product">
+                    <div className="product-detail">
+                      <img
+                        src={`${API_URL}/${val.Product.image}`}
+                        className="image"
+                        alt=""
+                      />
+                      <div className="details">
+                        <span className="product-name">
+                          <b>Product:</b>
+                          {val.Product.name}
+                        </span>
+                        <span className="product-id">
+                          <b>Desc:</b>
+                          {val.Product.description}
+                        </span>
+
+                        <span className="product-size">
+                          <b>Harga:</b>
+                          {formatRupiah(val.Product.price)}
+                        </span>
+                        <div
+                          className="product-color"
+                          style={{
+                            backgroundColor: "red",
+                            textAlign: "center",
+                            fontWeight: "bold",
+                            cursor: "pointer",
+                            color: "white",
+                            height: "30px",
+                            width: "30px",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                          onClick={() => {
+                            deleteCart(val.id);
+                          }}
+                        >
+                          <DeleteIcon style={{ fontSize: "20px" }} />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="price-detail">
+                      <div className="product-amount-container">
+                        <RemoveIcon
+                          style={{ cursor: "pointer" }}
+                          onClick={() => {
+                            submitLeft(val);
+                          }}
+                        />
+                        <div className="product-amount"> {val.quantity}</div>
+                        <AddIcon
+                          style={{ cursor: "pointer" }}
+                          onClick={() => {
+                            submitRight(val);
+                          }}
+                        />
+                      </div>
+                      <div className="product-price">
+                        {formatRupiah(val.Product.price * val.quantity)}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="HR" />
+                </>
+              );
+            })}
           </div>
           <div className="summary">
             <h1 className="summary-title">ORDER SUMMARY</h1>
             <div className="summary-item">
               <span className="summary-item-text">Subtotal</span>
-              <span className="summary-item-price">RP.60.000</span>
+              <span className="summary-item-price">Rp.{}</span>
             </div>
             <div className="summary-item">
               <span className="summary-item-text">Estimated Shipping</span>
@@ -154,4 +222,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Cart);
+const mapDispatchToProps = {
+  getCart,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);
