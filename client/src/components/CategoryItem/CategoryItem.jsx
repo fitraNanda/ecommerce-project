@@ -7,7 +7,9 @@ const CategoryItem = ({ item }) => {
       <img className="image" src={item.img} alt="" />
       <div className="info">
         <h1 className="title">{item.title}</h1>
-        <button className="button">SHOP NOW</button>
+        <button className="button">
+          <p style={{ opacity: "100%" }}>{item.description}</p>
+        </button>
       </div>
     </div>
   );

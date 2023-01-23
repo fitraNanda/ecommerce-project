@@ -1,16 +1,22 @@
 import React from "react";
-import { popularProduct } from "../../data";
 import Product from "../Product/Product";
 import "./Products.scss";
+import { connect } from "react-redux";
 
-const Products = () => {
+const Products = (props) => {
   return (
     <div className="products-container">
-      {popularProduct.map((val) => {
+      {props.productGlobal.map((val) => {
         return <Product item={val} key={val.id} />;
       })}
     </div>
   );
 };
 
-export default Products;
+const mapStateToProps = (state) => {
+  return {
+    productGlobal: state.product,
+  };
+};
+
+export default connect(mapStateToProps)(Products);

@@ -31,7 +31,7 @@ const App = (props) => {
         <Route element={<Register />} path="/register" />
         <Route element={<Login />} path="/login" />
         <Route element={<Cart />} path="/cart" />
-        <Route element={<ProductPage />} path="/product-page/:ProductId" />
+        <Route element={<ProductPage />} path="/product-page/:productId" />
         <Route element={<ProductList />} path="/product-list" />
         <Route element={<Admin />} path="/admin" />
         <Route element={<AdminPage />} path="/admin/page" />

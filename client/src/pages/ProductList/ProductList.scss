@@ -1,6 +1,10 @@
 @import "../../style.scss";
 
 .ProductList-container {
+  .border {
+    border-top: 1px solid lightgray;
+    width: 100%;
+  }
   .title {
     margin: 20px;
   }

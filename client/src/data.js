@@ -27,16 +27,19 @@ export const categories = [
     id: 1,
     img: "https://images.unsplash.com/photo-1650626106497-ea8437785b11?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjB8fGNha2UlMjBwcm9kdWN0fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
     title: "KUE",
+    description: "Beragam macam kue untuk cemilanmu",
   },
   {
     id: 2,
     img: "https://images.unsplash.com/photo-1563865436874-9aef32095fad?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8aW5ncmVkaWVudHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
     title: "SEMBAKO",
+    description: "Bahan kebutuhan rumah tangga selalu ada",
   },
   {
     id: 3,
     img: "https://images.unsplash.com/photo-1600202117804-212904e9680e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
     title: "MINUMAN",
+    description: "Melepaskan dahaga tentu saja menyegarkan",
   },
 ];
 

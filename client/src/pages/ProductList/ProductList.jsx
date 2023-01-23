@@ -10,30 +10,19 @@ import "./ProductList.scss";
 const ProductList = () => {
   return (
     <div className="ProductList-container">
-      <Navbar />
       <Annoucements />
-      <h1 className="title">Kue</h1>
+      <Navbar />
+      <div className="border"></div>
       <div className="filter-container">
         <div className="filter">
           <span className="filter-text">Filter Products:</span>
           <select className="select">
             <option className="option" disabled selected>
-              color
+              Category
             </option>
-            <option className="option">white</option>
-            <option className="option">black</option>
-            <option className="option">red</option>
-            <option className="option">blue</option>
-          </select>
-          <select className="select">
-            <option className="option" disabled selected>
-              size
-            </option>
-            <option className="option">XS</option>
-            <option className="option">S</option>
-            <option className="option">M</option>
-            <option className="option">L</option>
-            <option className="option">XL</option>
+            <option className="option">Kue</option>
+            <option className="option">Sembako</option>
+            <option className="option">Minuman</option>
           </select>
         </div>
         <div className="filter">

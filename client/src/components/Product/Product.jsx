@@ -3,12 +3,30 @@ import "./Product.scss";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import { API_URL } from "../../constant/API_URL";
+import { useNavigate } from "react-router-dom";
+import { getProductId } from "../../redux/action/singleProduct";
+import { connect } from "react-redux";
 
-const Product = ({ item }) => {
+const Product = (props) => {
+  const item = { name: "", image: "", price: "" };
+  const navigate = useNavigate();
+  const clikHandler = (id) => {
+    navigate(`/product-page/${id}`);
+    props.getProductId(id);
+  };
+
   return (
-    <div className="product-container">
+    <div
+      className="product-container"
+      onClick={() => clikHandler(props.item.id)}
+    >
       <div className="circle">
-        <img src={item.img} className="image" alt="" />
+        <img src={`${API_URL}/${props.item.image}`} className="image" alt="" />
+      </div>
+      <div className="name">
+        <h3 className="product-name">{props.item.name}</h3>
+        <h4 className="product-name">{props.item.price}</h4>
       </div>
       <div className="info">
         <div className="icon">
@@ -25,4 +43,14 @@ const Product = ({ item }) => {
   );
 };
 
-export default Product;
+const mapStateToProps = (state) => {
+  return {
+    productGlobal: state.product,
+  };
+};
+
+const mapDispatchToProps = {
+  getProductId,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Product);
