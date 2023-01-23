@@ -15,6 +15,8 @@ class cartsController {
       console.log(error);
     }
   }
+
+  static async getCarts(req, res) {}
 }
 
 module.exports = cartsController;

@@ -52,6 +52,17 @@ class ProductsController {
       res.status(500).send(error);
     }
   }
+  static async getId(req, res) {
+    try {
+      let result = await Products.findAll({
+        where: { id: req.params.id },
+      });
+      res.status(200).send(result);
+    } catch (error) {
+      console.log(error);
+      res.status(500).send(error);
+    }
+  }
 
   static async updateFile(req, res) {
     try {

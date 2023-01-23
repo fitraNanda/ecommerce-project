@@ -5,14 +5,12 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import { API_URL } from "../../constant/API_URL";
 import { useNavigate } from "react-router-dom";
-import { getProductId } from "../../redux/action/singleProduct";
+import { getProductId } from "../../redux/action/product";
 import { connect } from "react-redux";
 
 const Product = (props) => {
-  const item = { name: "", image: "", price: "" };
   const navigate = useNavigate();
   const clikHandler = (id) => {
-    navigate(`/product-page/${id}`);
     props.getProductId(id);
   };
 

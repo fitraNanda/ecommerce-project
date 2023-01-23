@@ -13,3 +13,13 @@ export const getProduct = () => {
       .catch((err) => console.log(err));
   };
 };
+
+export const getProductId = (id) => {
+  Axios.get(`${API_URL}/products/get/${id}`)
+    .then((res) => {
+      localStorage.setItem("product", JSON.stringify(res.data));
+
+      window.location.href = `http://localhost:3000/product-page/${id}`;
+    })
+    .catch((err) => console.log(err));
+};

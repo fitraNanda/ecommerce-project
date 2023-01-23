@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Annoucements from "../../components/Annoucements/Annoucements";
 import Footer from "../../components/Footer/Footer";
 import Navbar from "../../components/Navbar/Navbar";
@@ -8,12 +8,15 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { connect } from "react-redux";
 import { API_URL } from "../../constant/API_URL";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Axios from "axios";
+import { getProductId } from "../../redux/action/product";
 
 const Product = (props) => {
   const navigate = useNavigate();
   const [qty, setQty] = useState(1);
+  const params = useParams();
+  const [data, setData] = useState(JSON.parse(localStorage.getItem("product")));
 
   const addBtn = () => {
     setQty(qty + 1);
@@ -28,19 +31,31 @@ const Product = (props) => {
   };
 
   const submit = () => {
-    Axios.post(`${API_URL}/carts/add`, {
-      UserId: 1,
-      ProductId: 4,
-      quantity: 9,
+    console.log({
+      UserId: props.userGlobal.id,
+      ProductId: parseInt(params.productId),
+      quantity: qty,
       isPay: false,
-    })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    });
+
+    // Axios.post(`${API_URL}/carts/add`, {
+    //   UserId: 1,
+    //   ProductId: 4,
+    //   quantity: 9,
+    //   isPay: false,
+    // })
+    //   .then((res) => {
+    //     console.log(res);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   };
+
+  useEffect(() => {
+    const productLocalStorage = localStorage.getItem("product");
+    setData(JSON.parse(productLocalStorage));
+  }, []);
 
   return (
     <div className="productPage-container">
@@ -65,16 +80,12 @@ const Product = (props) => {
       </button>
       <div className="productPage-wrapper">
         <div className="img-container">
-          <img
-            className="image"
-            src={`${API_URL}/${props.singleProduct[0].image}`}
-            alt=""
-          />
+          <img className="image" src={`${API_URL}/${data[0].image}`} alt="" />
         </div>
         <div className="info-container">
-          <h1 className="title">{props.singleProduct[0].name}</h1>
-          <p className="description">{props.singleProduct[0].description}</p>
-          <span className="price">{props.singleProduct[0].price}</span>
+          <h1 className="title">{data[0].name}</h1>
+          <p className="description">{data[0].description}</p>
+          <span className="price">{data[0].price}</span>
 
           <div className="add-container">
             <div className="amount-container">
@@ -96,7 +107,12 @@ const Product = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    singleProduct: state.singleProduct,
+    userGlobal: state.user,
   };
 };
-export default connect(mapStateToProps)(Product);
+
+const mapDispatchToProps = {
+  getProductId,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Product);

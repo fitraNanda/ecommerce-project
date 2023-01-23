@@ -1,13 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Annoucements from "../../components/Annoucements/Annoucements";
 import Navbar from "../../components/Navbar/Navbar";
 import Products from "../../components/Products/Products";
 import Newsletter from "../../components/Newsletter/Newsletter";
 import Footer from "../../components/Footer/Footer";
-
 import "./ProductList.scss";
+import { getProduct } from "../../redux/action/product";
+import { connect } from "react-redux";
 
-const ProductList = () => {
+const ProductList = (props) => {
+  useEffect(() => {
+    props.getProduct();
+  }, []);
+
   return (
     <div className="ProductList-container">
       <Annoucements />
@@ -43,4 +48,14 @@ const ProductList = () => {
   );
 };
 
-export default ProductList;
+const mapStateToProps = (state) => {
+  return {
+    productGlobal: state.product,
+  };
+};
+
+const mapDispatchToProps = {
+  getProduct,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductList);
