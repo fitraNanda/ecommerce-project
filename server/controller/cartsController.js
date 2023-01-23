@@ -6,7 +6,7 @@ class cartsController {
 
     try {
       let result = await Carts.findAll({
-        where: { UserId, ProductId },
+        where: { UserId, ProductId, isPay: " false " },
       });
 
       if (result.length !== 0) {
