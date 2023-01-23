@@ -58,7 +58,7 @@ class cartsController {
     try {
       let result = await Carts.findAll({
         include: [Products, Users],
-        where: { UserId: req.params.id },
+        where: { UserId: req.params.id, isPay: "false" },
         order: [["id", "ASC"]],
       });
       res.status(200).send(result);
@@ -77,6 +77,22 @@ class cartsController {
       });
 
       res.status(200).sendStatus(200);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+
+  static async payCart(req, res) {
+    const id = +req.params.id;
+
+    try {
+      let result2 = await Carts.update(
+        {
+          isPay: true,
+        },
+        { where: { id } }
+      );
+      res.status(200).send(result2);
     } catch (error) {
       res.status(500).send(error);
     }

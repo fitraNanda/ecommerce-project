@@ -11,6 +11,7 @@ import { API_URL } from "../../constant/API_URL";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { getCart } from "../../redux/action/cart";
 import Axios from "axios";
+import Swal from "sweetalert2";
 
 const Cart = (props) => {
   const navigate = useNavigate();
@@ -71,7 +72,17 @@ const Cart = (props) => {
       });
   };
 
-  const checkout = () => {};
+  const checkout = () => {
+    for (let i = 0; i < props.cartGlobal.length; i++) {
+      Axios.post(`${API_URL}/carts/pay/${props.cartGlobal[i].id}`)
+        .then((res) => {
+          props.getCart(props.userGlobal.id);
+        })
+        .catch((err) => console.log(err));
+    }
+
+    Swal.fire("Good job!", "Terima Kasih telah berbelanja!", "success");
+  };
 
   const subTotal = () => {
     let final = 0;
@@ -212,7 +223,11 @@ const Cart = (props) => {
                 {formatRupiah(subTotal() + 10000 + 5000)}
               </span>
             </div>
-            <button className="button" onClick={checkout}>
+            <button
+              className="button"
+              style={{ cursor: "pointer" }}
+              onClick={checkout}
+            >
               CHEKOUT NOW
             </button>
           </div>

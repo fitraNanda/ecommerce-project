@@ -55,6 +55,9 @@ const Admin = (props) => {
     props.getProduct();
   }, []);
 
+  if (props.userGlobal.role == "user") {
+    navigate("/");
+  }
   return (
     <div>
       <div className="navbar-container">
@@ -122,6 +125,7 @@ const Admin = (props) => {
 const mapStateToProps = (state) => {
   return {
     productGlobal: state.product,
+    userGlobal: state.user,
   };
 };
 
